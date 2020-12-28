@@ -1,0 +1,1 @@
+oauth/authorize?client_id=6&redirect_url=http://localhost&response_type=token
