@@ -21,6 +21,7 @@ class BuyerSellerController extends ApiController
      */
     public function index(Buyer $buyer)
     {
+        $this->allowedAdminAction();
         /* obtiene los vendedores que le vendieron a un comprador en especifico */
 
         /*Se obtiene basado en el id una coleccion basada en productos y vendedores*/

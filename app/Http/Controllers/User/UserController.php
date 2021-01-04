@@ -17,6 +17,12 @@ class UserController extends ApiController
         $this->middleware('client.credentials')->only(['store', 'resend']);
         $this->middleware('auth:api')->except(['store', 'resend', 'verify']);
         $this->middleware('transform.input:'.UserTransformer::class)->only(['store', 'update']);
+
+        $this->middleware('scope:manage-account')->only(['show','update']);
+
+        $this->middleware('can:view,user')->only(['show']);
+        $this->middleware('can:update,user')->only(['update']);
+        $this->middleware('can:delete,user')->only(['destroy']);
     }
 
     /**
@@ -26,6 +32,8 @@ class UserController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
+
         $usuarios = User::all();
         return $this->showAll($usuarios);
     }
@@ -78,7 +86,7 @@ class UserController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
-    {
+    {        
         $rules = [
             /* email,'.$user->id,  con esta regla lo que haces es exceptuar el mismo email. */
             'email' => 'email|unique:users,email,'.$user->id,
@@ -104,6 +112,8 @@ class UserController extends ApiController
         }
 
         if ($request->has('admin')) {
+            $this->allowedAdminAction();
+
             if (!$user->esVerificado()) {
                 return $this->errorResponse('Unicamente los usuarios verificados pueden cambiar su valor de administrador', 409); /*error 409 conflicto peticion*/
             }
@@ -134,6 +144,12 @@ class UserController extends ApiController
         return $this->showOne($user);
     }
 
+    public function me(Request $request)
+    {
+        $userMe = $request->user();
+        return $this->showOne($userMe);
+    }
+    
     public function verify($token)
     {
         $user = User::where('verification_token', $token)->firstOrFail ();

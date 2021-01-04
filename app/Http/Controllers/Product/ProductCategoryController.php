@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -14,6 +13,11 @@ class ProductCategoryController extends ApiController
     {
         $this->middleware('client.credentials')->only(['index']);
         $this->middleware('auth:api')->except(['index']);
+
+        $this->middleware('scope:manage-products')->except(['index']);
+
+        $this->middleware('can:add-category,product')->only(['update']);
+        $this->middleware('can:delete-category,product')->only(['destroy']);
     }
     
     /**

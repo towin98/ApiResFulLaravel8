@@ -59,7 +59,6 @@ trait ApiResponser
     
     protected function filterData(Collection $collection, $transformador)
 	{
-
         foreach (request()->query() as $attributeUrl => $value) {
             $attribute = $transformador::originalAttribute($attributeUrl);
             if (isset($attribute, $value)) {
@@ -127,6 +126,7 @@ trait ApiResponser
 
     protected function cacheResponse($data)
     {
+        /*url actual*/
         $url = request()->url();
 
         $queryParams = request()->query();
@@ -146,7 +146,7 @@ trait ApiResponser
          * ----- esta no se mostrara hasta que el tiempo transcurrido pase, ya que 
          * ----- el sistema seguira consultando en la cache los datos mas no en la DB. 
         */
-        return Cache::remember($fullUrl, 30, function () use ($data){
+        return Cache::remember($fullUrl, 1, function () use ($data){
             return $data;
         });
     }

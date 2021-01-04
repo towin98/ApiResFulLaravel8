@@ -21,6 +21,8 @@ class ProductBuyerController extends ApiController
      */
     public function index(Product $product)
     {
+        $this->allowedAdminAction();
+        
         /*obtener la lista de compradores de un producto especifico*/
 
         $buyers = $product->transactions()

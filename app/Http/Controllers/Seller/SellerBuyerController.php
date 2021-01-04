@@ -20,6 +20,7 @@ class SellerBuyerController extends ApiController
      */
     public function index(Seller $seller)
     {
+        $this->allowedAdminAction();
         /*
         Lista de compradores de un vendedor en especifico
         */

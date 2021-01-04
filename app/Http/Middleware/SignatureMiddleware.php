@@ -16,6 +16,7 @@ class SignatureMiddleware
      */
     public function handle(Request $request, Closure $next, $header = 'X-name')
     {
+        /*respuesta de cabecera*/
         $response = $next($request);
 
         $response->headers->set($header, config('app.name'));

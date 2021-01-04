@@ -20,6 +20,8 @@ class CategoryBuyerController extends ApiController
      */
     public function index(Category $category)
     {
+        $this->allowedAdminAction();
+        
         /*obtenemos la lista de los compradores de una categoria especifica*/
         $buyers = $category->products()
         ->whereHas('transactions')

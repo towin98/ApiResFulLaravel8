@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Mexico_City',
 
     /*
     |--------------------------------------------------------------------------
@@ -166,9 +166,11 @@ return [
          * Package Service Providers...
          * Registro de paquetes
          */
-        
+        /* \Barryvdh\Cors\ServiceProvider::class, */
         Spatie\Fractal\FractalServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        /* \Fruitcake\Cors\CorsServiceProvider::class, */
+
 
         /*
          * Application Service Providers...

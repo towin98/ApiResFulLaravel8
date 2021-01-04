@@ -21,6 +21,8 @@ class CategorySellerController extends ApiController
      */
     public function index(Category $category)
     {
+        $this->allowedAdminAction();
+        
         /* Lista de vendedores que han vendido productos de una categoria en especifico
     
         - acceder primero a lista completa de los productos products()

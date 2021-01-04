@@ -21,6 +21,8 @@ class CategoryTransactionController extends ApiController
      */
     public function index(Category $category)
     {
+        $this->allowedAdminAction();
+        
         /* 
         -lista de productos que por lo menos tengan una transaccion, 
         -traemos las transacciones

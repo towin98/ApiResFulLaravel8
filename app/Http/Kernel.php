@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            'cors',
             'signature:X-Application-Name',
             'throttle:10,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -66,14 +67,22 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         /*Registro de nuevos Middleware*/
+        /*Cabecera*/
         'signature' => \App\Http\Middleware\SignatureMiddleware::class,
+        
         'transform.input' => \App\Http\Middleware\TransformInput::class,
+
+        /*Para credendicales de clientes que quieran ingresar*/
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
 
-        /*Verifica que este haciendo uso de almenos uno de los scup definidos*/
+        /*Verifica que este haciendo uso de almenos uno de los scope definidos*/
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
 
         /*Verifica que todos hayan sido garantizados para ese access token*/
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
+
+        /*Decimos que vamos a incluir las cabeceras de cors */
+        'cors' => \Fruitcake\Cors\HandleCors::class,
     ];
 }
+

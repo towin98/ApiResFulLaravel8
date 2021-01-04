@@ -2,6 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Buyer;
+use App\Models\Product;
+use App\Models\Seller;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Policies\BuyerPolicy;
+use App\Policies\ProductPolicy;
+use App\Policies\SellerPolicy;
+use App\Policies\TransactionPolicy;
+use App\Policies\UserPolicy;
 use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -15,7 +25,14 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        /**Cada vez que se haga una restriccion con middleware laravel ejecutara el policy 
+         * que coincida con el tipo
+        */
+        Buyer::class => BuyerPolicy::class,
+        Seller::class => SellerPolicy::class,
+        User::class => UserPolicy::class,
+        Transaction::class => TransactionPolicy::class,
+        Product::class => ProductPolicy::class,
     ];
 
     /**
@@ -27,21 +44,24 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('admin-action', function ($user) {
+            return $user->esAdministrador();
+        });
+
         /*Importamos la lista de rutas de passport*/
         Passport::routes();
-        Passport::tokensExpireIn(Carbon::now()->addMinutes(50));
-        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+        Passport::tokensExpireIn(Carbon::now()->addHours(4));
+        Passport::refreshTokensExpireIn(Carbon::now()->addDays(20));
 
-        /*obtenemos inmediatamnete un acces token*/
+        /*obtenemos inmediatamnete un access token*/
         Passport::enableImplicitGrant();
 
-        /*Registrar scup*/
+        /*Registrar scopes*/
         Passport::tokensCan([
-            /* permitirle hacer compras en nombre del usuario */
-            'purchase-product' => 'Crear transaccion para comprador productos determinados',
-            'manege-products' => 'Crear, ver, Actualizar y eliminar',
-            'manege-account' => 'Obtener la informacion  de la cuenta, nombre, email, estado(sin contraseña), modificar datos como email, nombre y contrasena. No puede eliminar la cuenta.',
-            'read-general' => 'obtener la informacion general, categorias donde se compra y se vende, productos vendidos o comprados, transacciones, compras y ventas.'
+            'purchase-product' => 'Crear transacciones para comprar productos determinados',
+            'manage-products' => 'Crear, ver, actualizar y eliminar productos',
+            'manage-account' => 'Obtener la informacion de la cuenta, nombre, email, estado (sin contraseña), modificar datos como email, nombre y contraseña. No puede eliminar la cuenta',
+            'read-general' => 'Obtener información general, categorías donde se compra y se vende, productos vendidos o comprados, transacciones, compras y ventas',
         ]);
     }
 }

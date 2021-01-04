@@ -17,7 +17,7 @@
                             tokens de acceso personales
                         </span>
 
-                        <a class="action-link" @click="showCreateTokenForm">
+                        <a class="btn btn-primary" @click="showCreateTokenForm">
                             Crear nuevo token
                         </a>
                     </div>
@@ -30,11 +30,11 @@
                     </p>
 
                     <!-- Personal Access Tokens -->
-                    <table class="table table-borderless m-b-none" v-if="tokens.length > 0">
+                    <table class="table" v-if="tokens.length > 0">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th></th>
+                                <th scope="col">Name</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
 
@@ -63,11 +63,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
                         <h4 class="modal-title">
                             Crear Token
                         </h4>
+                        <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
                     </div>
 
                     <div class="modal-body">
@@ -131,11 +131,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title">
+                            Token de accesso personal
+                        </h4>
                         <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
-                        <h4 class="modal-title">
-                            Personal Access Token
-                        </h4>
                     </div>
 
                     <div class="modal-body">
@@ -143,7 +143,7 @@
                             Aquí está su nuevo token de acceso personal. Esta es la única vez que se mostrará, ¡así que no la pierda! Ahora puede usar este token para realizar solicitudes de API.
                         </p>
 
-                        <pre><code>{{ accessToken }}</code></pre>
+                        <pre style="white-space: normal;"><code>{{ accessToken }}</code></pre>
                     </div>
 
                     <!-- Modal Actions -->

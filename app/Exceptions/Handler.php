@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use App\Traits\ApiResponser;
+use Asm89\Stack\CorsService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
@@ -55,8 +57,21 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    /*creado revisar video 64 */
     public function render($request, Throwable $e)
+    {
+        $response = $this->haldlerException($request, $e);
+
+        /**Le pedimos a laravel que resuelva el servicio de CORS
+         * Parametro que recibe
+         *  $response es la respuesta donde vamos agregar las cabeceras
+         *  $request peticion
+        */
+        app(CorsService::class)->addActualRequestHeaders($response, $request);
+
+        return $response;
+    }
+
+    public function haldlerException($request, Throwable $e)
     {
         if ($e instanceof ValidationException) {
             return $this->convertValidationExceptionToResponse($e, $request);
@@ -71,7 +86,7 @@ class Handler extends ExceptionHandler
             return $this->unauthenticated($request, $e);
         }
 
-        if ($e instanceof AuthenticationException) {
+        if ($e instanceof AuthorizationException) {
             return $this->errorResponse('No posee permisos para ejecutar esta accion', 403);
         }
 

@@ -34,15 +34,15 @@ class ProductTransformer extends TransformerAbstract
     {
         return [
             'identificador' => (int)$product->id,
-            'nombre' => (string)$product->name,
+            'titulo' => (string)$product->name,
             'detalles' => (string)$product->description,
-            'Disponibles' => (int)$product->quantity,
+            'disponibles' => (string)$product->quantity,
             'estado' => (string)$product->status,
             'imagen' => url("img/{$product->image}"),
             'vendedor' => (int)$product->seller_id,
             'fechaCreacion' => (string)$product->created_at,
             'fechaActualizacion' => (string)$product->updated_at,
-            'fechaEliminacion' => isset($product->deleted_at) ? (string)$product->delete_at : null,
+            'fechaEliminacion' => isset($product->deleted_at) ? (string) $product->deleted_at : null,
 
             'links' => [
                 [
@@ -50,11 +50,11 @@ class ProductTransformer extends TransformerAbstract
                     'href' => route('products.show', $product->id),
                 ],
                 [
-                    'rel' => 'product.buyers', /*Lista de compradores de ese producto*/
+                    'rel' => 'product.buyers',
                     'href' => route('products.buyers.index', $product->id),
                 ],
                 [
-                    'rel' => 'product.categories', /*lista de productos de esa caretegoria*/
+                    'rel' => 'product.categories',
                     'href' => route('products.categories.index', $product->id),
                 ],
                 [
@@ -73,9 +73,9 @@ class ProductTransformer extends TransformerAbstract
     {
         $attributes = [
             'identificador' => 'id',
-            'nombre' => 'name',
+            'titulo' => 'name',
             'detalles' => 'description',
-            'Disponibles' => 'quantity',
+            'disponibles' => 'quantity',
             'estado' => 'status',
             'imagen' => 'image',
             'vendedor' => 'seller_id',
@@ -84,7 +84,7 @@ class ProductTransformer extends TransformerAbstract
             'fechaEliminacion' => 'deleted_at',
         ];
 
-        return isset($attributes[$index]) ? $attributes[$index] : null ;
+        return isset($attributes[$index]) ? $attributes[$index] : null;
     }
 
     public static function transformedAttribute($index)

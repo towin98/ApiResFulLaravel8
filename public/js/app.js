@@ -39626,6 +39626,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [
+        _vm._v("\n                        Create Client\n                    ")
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -39637,11 +39641,7 @@ var staticRenderFns = [
           }
         },
         [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Create Client\n                    ")
-      ])
+      )
     ])
   },
   function() {
@@ -39658,6 +39658,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [
+        _vm._v("\n                        Edit Client\n                    ")
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -39669,11 +39673,7 @@ var staticRenderFns = [
           }
         },
         [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Edit Client\n                    ")
-      ])
+      )
     ])
   },
   function() {
@@ -39730,7 +39730,7 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "action-link",
+                  staticClass: "btn btn-primary",
                   on: { click: _vm.showCreateTokenForm }
                 },
                 [
@@ -39753,7 +39753,7 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _vm.tokens.length > 0
-            ? _c("table", { staticClass: "table table-borderless m-b-none" }, [
+            ? _c("table", { staticClass: "table" }, [
                 _vm._m(0),
                 _vm._v(" "),
                 _c(
@@ -39973,7 +39973,9 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("pre", [_c("code", [_vm._v(_vm._s(_vm.accessToken))])])
+              _c("pre", { staticStyle: { "white-space": "normal" } }, [
+                _c("code", [_vm._v(_vm._s(_vm.accessToken))])
+              ])
             ]),
             _vm._v(" "),
             _vm._m(4)
@@ -39989,7 +39991,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [_c("th", [_vm._v("Name")]), _vm._v(" "), _c("th")])
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } })
+      ])
     ])
   },
   function() {
@@ -39997,6 +40003,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [
+        _vm._v("\n                        Crear Token\n                    ")
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -40008,11 +40018,7 @@ var staticRenderFns = [
           }
         },
         [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Crear Token\n                    ")
-      ])
+      )
     ])
   },
   function() {
@@ -40029,6 +40035,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [
+        _vm._v(
+          "\n                        Token de accesso personal\n                    "
+        )
+      ]),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -40040,13 +40052,7 @@ var staticRenderFns = [
           }
         },
         [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [
-        _vm._v(
-          "\n                        Personal Access Token\n                    "
-        )
-      ])
+      )
     ])
   },
   function() {

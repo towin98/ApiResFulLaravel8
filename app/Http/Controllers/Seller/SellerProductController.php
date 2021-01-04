@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
 use App\Transformers\ProductTransformer;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -20,7 +21,16 @@ class SellerProductController extends ApiController
         parent::__construct();
 
         $this->middleware('transform.input:'.ProductTransformer::class)->only(['store', 'update']);
-    }
+        $this->middleware('scope:manage-products')->except(['index']);
+        
+        /** policy -- nombre de metodos ej: deleteProduct -> delete-product 
+         * (estos son separados por raya)*/
+        
+        $this->middleware('can:view,seller')->only(['index']);
+        $this->middleware('can:sale,seller')->only(['store']);
+        $this->middleware('can:edit-product,seller')->only(['update']);
+        $this->middleware('can:delete-product,seller')->only(['destroy']);
+    } 
 
 
     /**
@@ -30,13 +40,16 @@ class SellerProductController extends ApiController
      */
     public function index(Seller $seller)
     {
-        /* Obtenemos los productos vendidos de un vendedor en especifico*/
-
-        $productos = $seller->products;
+        if(request()->user()->tokenCan('read-general')  || request()->user()->tokenCan('manage-products')){
+            /* Obtenemos los productos vendidos de un vendedor en especifico*/
+    
+            $productos = $seller->products;
+            
+            return $this->showAll($productos);
+        }
+        throw new AuthenticationException;
         
-        return $this->showAll($productos);
     }
-
 
     /**
      * Store a newly created resource in storage.

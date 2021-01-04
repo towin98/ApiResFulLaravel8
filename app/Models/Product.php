@@ -20,14 +20,14 @@ class Product extends Model
     protected $dates = ['delete_at']; /*decimos que debera tratado como una fecha*/
 
     protected $fillable = [
-        'name',
-        'description',
-        'quantity',
-        'status',
-        'image',
-        'seller_id'
+    	'name',
+    	'description',
+    	'quantity',
+    	'status',
+    	'image',
+    	'seller_id',
     ];
-
+    
     protected $hidden = [
         'pivot'
     ];
